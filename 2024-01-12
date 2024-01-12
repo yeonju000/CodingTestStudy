@@ -1,0 +1,26 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string s) {
+    string answer = "";
+    int temp = 0;
+    
+    for(int i = 0; i < s.size(); i++) {
+        temp += 1;
+        if(s[i] == ' ') {
+            temp = 0;
+            answer += " ";
+        } else {
+            if(temp % 2 == 0) {
+                s[i] = tolower(s[i]);
+                answer += s[i];
+            } else {
+                s[i] = toupper(s[i]);
+                answer += s[i];
+            }
+        }
+    }
+    return answer;
+}
