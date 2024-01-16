@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+    string binary_arr1="";
+    string binary_arr2="";
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            binary_arr1.insert(0,to_string(arr1[i]%2));
+            binary_arr2.insert(0,to_string(arr2[i]%2));
+            arr1[i]=arr1[i]/2;
+            arr2[i]=arr2[i]/2;
+        }
+        for(int str=0; str<n; str++){
+            if((binary_arr1[str]=='1') | (binary_arr2[str]=='1')){
+                binary_arr1[str]='#';
+            }
+            else{
+                binary_arr1[str]=' ';
+            }
+        }
+        answer.push_back(binary_arr1);
+        binary_arr1="";
+        binary_arr2="";
+        
+    }
+    return answer;
+}
