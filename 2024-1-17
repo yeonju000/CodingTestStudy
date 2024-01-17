@@ -1,0 +1,58 @@
+#include <sstream>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int solution(vector<string> friends, vector<string> gifts) {
+    int answer = 0;
+    int** giventake = new int*[friends.size()];
+    for(int i=0; i<friends.size(); i++){
+        giventake[i] = new int[friends.size()]{};
+    }
+    string give, take;
+    int give_idx, take_idx;
+    for(int i=0; i<gifts.size(); i++){
+        stringstream temp(gifts[i]);
+        temp >> give >> take;
+        give_idx = find(friends.begin(), friends.end(), give)-friends.begin();
+        take_idx = find(friends.begin(), friends.end(), take)-friends.begin();
+        giventake[give_idx][take_idx]++;
+    }
+    int* nextgift = new int[friends.size()]{};
+    
+    for(int i=0; i<friends.size(); i++){
+        for(int j=0; j<i; j++){
+            if(giventake[i][j]>giventake[j][i]){
+                nextgift[i]++;
+            }
+            else if(giventake[i][j]<giventake[j][i]){
+                nextgift[j]++;
+            }
+            else if(giventake[i][j]==giventake[j][i]){
+                int i_indi=0;
+                int j_indi=0;
+                for(int k=0; k<friends.size(); k++){
+                    i_indi+=giventake[i][k];
+                    i_indi-=giventake[k][i];
+                    j_indi+=giventake[j][k];
+                    j_indi-=giventake[k][j];
+                }
+                if(i_indi<j_indi){
+                    nextgift[j]++;
+                }
+                else if(j_indi<i_indi){
+                    nextgift[i]++;
+                }
+            }
+        }
+    }
+    int max=-1;
+    for(int i=0; i<friends.size();i++){
+        if(nextgift[i]>max)
+            max=nextgift[i];
+    }
+    answer=max;
+    return answer;
+}
