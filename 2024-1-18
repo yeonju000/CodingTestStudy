@@ -1,0 +1,41 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <numeric>
+
+using namespace std;
+
+int solution(int n, int m, vector<int> section) {
+    int answer = 0;
+    vector<int> wall(n);
+    //색칠해야하는 부분 1로 표시
+    for(int i=0; i<section.size(); i++){
+        wall[section[i]-1]=1;
+    }
+    
+    //벡터의 합이 0이 되면 종료하기 위한 변수
+    int sum=accumulate(wall.begin(), wall.end(),0);
+    while(sum!=0){
+        for(int i=section[0]-1; i<n-section[0]-1 & sum!=0; i=i+4){
+            while(wall[i]!=0 & i<n-section[0]-1)
+                i++;
+            answer++;
+            //m만큼 범위 덧칠하기
+            for(int j=0; j<m; j++){
+                wall[section[0]-1+i+j]=0;
+            }
+            sum = accumulate(wall.begin(), wall.end(), 0);
+        }
+    }
+    
+    for(int i=0; i<n-m-section[0]+2 & sum!=0; i++){
+        answer++;
+        //m만큼 범위 덧칠하기
+        for(int j=0; j<m; j++){
+            wall[section[0]-1+i+j]=0;
+        }
+        sum = accumulate(wall.begin(), wall.end(), 0);
+    }
+    
+    return answer;
+}
