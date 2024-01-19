@@ -1,0 +1,47 @@
+//1번째 방법
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n, int m, vector<int> section) {
+    int answer = 0;
+    int s = section.size();
+    int start = section[0]-1;
+    int last = section[s-1];
+    
+    for(int i = 0; i < s; i++){
+        if(start < section[i]){
+            start = section[i] + m - 1; 
+            answer += 1;
+        }
+    }
+    
+    return answer;
+}
+
+
+
+//2번째 방법
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n, int m, vector<int> section) {
+    int answer = 0;
+    int start = section[0] - 1;
+    
+    for (int s : section) {
+        if (start < s) {
+            start = s + m - 1;
+            answer += 1;
+        }
+    }
+
+    return answer;
+}
+
+
+
