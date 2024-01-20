@@ -1,0 +1,46 @@
+#include <string>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+    vector<string> arr1_2(n, "");
+    vector<string> arr2_2(n, "");
+    
+    //암호화 풀기
+    for(int i = 0; i < n; i++){
+        for(int k = 0; k < n; k++){
+            //2의 n-(k-1)승 구하기
+            int a = static_cast<int>(pow(2, n - k - 1));
+            if (arr1[i] % a == arr1[i]) { //안 나눠지면 해당 없으므로 0
+                arr1_2[i] += "0";
+            } else {
+                arr1_2[i] += "1"; // 나눠지면 1
+                arr1[i] -= a;
+            }
+        
+            if (arr2[i] % a == arr2[i]) {
+                arr2_2[i] += "0";
+            } else {
+                arr2_2[i] += "1";
+                arr2[i] -= a;
+            }
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        string result = "";
+        for (int k = 0; k < n; k++) {
+            if (arr1_2[i][k] == '1' || arr2_2[i][k] == '1') {
+                result += "#"; // 하나라도 1이면 벽(#)
+            } else {
+                result += " "; //둘다 0이면 공백
+            }
+        }
+        answer.push_back(result);
+    }
+    
+    return answer;
+}
