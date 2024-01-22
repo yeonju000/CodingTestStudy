@@ -15,25 +15,30 @@ int solution(int n, int m, vector<int> section) {
     
     //벡터의 합이 0이 되면 종료하기 위한 변수
     int sum=accumulate(wall.begin(), wall.end(),0);
+    int check=0;
+    int i=0;
+    //모두 페인트칠 될 때까지 반복
     while(sum!=0){
-        for(int i=section[0]-1; i<n-section[0]-1 & sum!=0; i=i+4){
-            while(wall[i]!=0 & i<n-section[0]-1)
-                i++;
-            answer++;
-            //m만큼 범위 덧칠하기
-            for(int j=0; j<m; j++){
-                wall[section[0]-1+i+j]=0;
+        //롤러의 첫부분을 페인트칠이 필요한 벽으로 이동
+        while(wall[i]!=1){
+            i++;
+            //롤러의 끝부분이 벽을 넘는다면 위치 조정
+            if(i+m >= n){
+                i=n-m;
+                break;
             }
-            sum = accumulate(wall.begin(), wall.end(), 0);
         }
-    }
-    
-    for(int i=0; i<n-m-section[0]+2 & sum!=0; i++){
-        answer++;
-        //m만큼 범위 덧칠하기
+        //롤러의 크기만큼 페인트칠
         for(int j=0; j<m; j++){
-            wall[section[0]-1+i+j]=0;
+            if(wall[i+j]==1){
+                check=1;
+                wall[i+j]=0;
+            }
         }
+        //페인트칠을 했는지 검사
+        if(check==1)
+            answer++;
+        check=0;
         sum = accumulate(wall.begin(), wall.end(), 0);
     }
     
