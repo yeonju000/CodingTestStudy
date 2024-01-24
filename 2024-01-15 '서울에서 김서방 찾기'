@@ -1,0 +1,16 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(vector<string> seoul) {
+    string answer = "";
+
+    for(int x=0; x<=1000; x++) {
+        if(seoul[x] == "Kim") {
+            answer = "김서방은 " + to_string(x) + "에 있다";
+            break;
+        }
+    }
+    return answer;
+}
