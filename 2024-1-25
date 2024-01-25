@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(vector<string> cards1, vector<string> cards2, vector<string> goal) {
+    string answer = "";
+    int correct=0;
+    int c1_idx=0;
+    int c2_idx=0;
+    while(correct < goal.size()){
+        if((c1_idx < cards1.size()) && (goal[correct].compare(cards1[c1_idx])==0)){
+            c1_idx++;
+            correct++;
+        }
+        else if((c2_idx < cards2.size()) && (correct < goal.size()) && (goal[correct].compare(cards2[c2_idx])==0)){
+            c2_idx++;
+            correct++;
+        }
+        else{
+            answer+="No";
+            break;
+        }
+    }
+    if(correct == goal.size()){
+        answer+="Yes";
+    }
+    return answer;
+}
